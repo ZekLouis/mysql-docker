@@ -1,0 +1,24 @@
+version: "3.8"
+services:
+  db:
+    image: "mysql:5.7"
+    container_name: "mysql-test"
+    volumes:
+      - mysql-test:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - "3306:3306"
+
+  backend-pma:
+    image: "phpmyadmin/phpmyadmin"
+    container_name: "pma-test"
+    links:
+      - "db:mysql"
+    ports:
+      - "10001:80"
+    depends_on:
+      - db
+
+volumes:
+  mysql-test:
